@@ -29,7 +29,7 @@
 // are declared as inline for maximum speed. 
 
 //#define DT_VIRTUAL_QUERYFILTER 1
-
+///　定义导航网格查询操作的多边形过滤和遍历成本
 /// Defines polygon filtering and traversal costs for navigation mesh query operations.
 /// @ingroup detour
 class dtQueryFilter
@@ -114,7 +114,7 @@ public:
 	///@}
 
 };
-
+///提供执行与路径查找相关的查询的能力
 /// Provides the ability to perform pathfinding related queries against
 /// a navigation mesh.
 /// @ingroup detour
@@ -143,6 +143,16 @@ public:
 	///  							[(polyRef) * @p pathCount]
 	///  @param[out]	pathCount	The number of polygons returned in the @p path array.
 	///  @param[in]		maxPath		The maximum number of polygons the @p path array can hold. [Limit: >= 1]
+	///查找从起始多边形到结束多边形的路径。
+	/// @param [in] startRef起始多边形的引用id。
+	/// @param [in] endRef结束多边形的引用id。
+	/// @param [in] startPos起始多边形内的位置。 [（x，y，z）]
+	/// @param [in] endPos结束多边形内的位置。 [（x，y，z）]
+	/// @param [in] filter要应用于查询的多边形过滤器。
+	/// @param [out] path表示路径的多边形引用的有序列表。 （从头到尾。）
+	/// [（polyRef）* @p pathCount]
+	/// @param [out] pathCount @p路径数组中返回的多边形数。
+	/// @param [in] maxPath @p路径数组可以容纳的最大多边形数。 [限制：> = 1]
 	dtStatus findPath(dtPolyRef startRef, dtPolyRef endRef,
 					  const float* startPos, const float* endPos,
 					  const dtQueryFilter* filter,
@@ -160,6 +170,18 @@ public:
 	///  @param[in]		maxStraightPath		The maximum number of points the straight path arrays can hold.  [Limit: > 0]
 	///  @param[in]		options				Query options. (see: #dtStraightPathOptions)
 	/// @returns The status flags for the query.
+	///在多边形通道内查找从开始到结束位置的直线路径。
+	/// @param [in] startPos路径起始位置。 [（x，y，z）]
+	/// @param [in] endPos路径结束位置。 [（x，y，z）]
+	/// @param [in] path表示路径走廊的多边形引用数组。
+	/// @param [in] pathSize @p路径数组中的多边形数。
+	/// @param [out] straightPath描述直线路径的点。 [（x，y，z）* @p straightPathCount]。
+	/// @param [out] straightPathFlags描述每个点的标志。 （参见：#dtStraightPathFlags）[opt]
+	/// @param [out] straightPathRefs在每个点输入的多边形的引用id。 [选择]
+	/// @param [out] straightPathCount直线路径中的点数。
+	/// @param [in] maxStraightPath直路径数组可以容纳的最大点数。 [限制：> 0]
+	/// @param [in]选项查询选项。 （参见：#dtStraightPathOptions）
+	/// @returns查询的状态标志。
 	dtStatus findStraightPath(const float* startPos, const float* endPos,
 							  const dtPolyRef* path, const int pathSize,
 							  float* straightPath, unsigned char* straightPathFlags, dtPolyRef* straightPathRefs,
@@ -260,6 +282,13 @@ public:
 	///  @param[out]	nearestRef	The reference id of the nearest polygon.
 	///  @param[out]	nearestPt	The nearest point on the polygon. [opt] [(x, y, z)]
 	/// @returns The status flags for the query.
+	///查找最接近指定中心点的多边形。
+	/// @param [in] center搜索框的中心。 [（x，y，z）]
+	/// @param [in] extents沿每个轴的搜索距离。 [（x，y，z）]
+	/// @param [in] filter要应用于查询的多边形过滤器。
+	/// @param [out] nearestRef最近多边形的引用id。
+	/// @param [out] nearestPt多边形上的最近点。 [opt] [（x，y，z）]
+	/// @returns查询的状态标志。
 	dtStatus findNearestPoly(const float* center, const float* extents,
 							 const dtQueryFilter* filter,
 							 dtPolyRef* nearestRef, float* nearestPt) const;
@@ -426,6 +455,7 @@ private:
 	dtMeshTile* getNeighbourTileAt(int x, int y, int side) const;
 
 	/// Queries polygons within a tile.
+	///查询图块中的多边形。
 	int queryPolygonsInTile(const dtMeshTile* tile, const float* qmin, const float* qmax, const dtQueryFilter* filter,
 							dtPolyRef* polys, const int maxPolys) const;
 	/// Find nearest polygon within a tile.

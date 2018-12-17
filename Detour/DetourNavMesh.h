@@ -24,11 +24,11 @@
 
 // Note: If you want to use 64-bit refs, change the types of both dtPolyRef & dtTileRef.
 // It is also recommended that you change dtHashRef() to a proper 64-bit hash.
-
+///导航网格平铺中多边形的句柄
 /// A handle to a polygon within a navigation mesh tile.
 /// @ingroup detour
 typedef unsigned int dtPolyRef;
-
+///导航网格中图块的句柄
 /// A handle to a tile within a navigation mesh.
 /// @ingroup detour
 typedef unsigned int dtTileRef;
@@ -345,7 +345,7 @@ public:
 	/// @{
 	/// @name Query Functions
 
-    //计算世界坐标系对应的格子坐标。
+	///计算指定世界位置的平铺网格位置。
 	/// Calculates the tile grid location for the specified world position.
 	///  @param[in]	pos  The world position for the query. [(x, y, z)]
 	///  @param[out]	tx		The tile's x-location. (x, y)
@@ -553,6 +553,7 @@ private:
 	dtMeshTile* getTile(int i);
 
 	/// Returns neighbour tile based on side.
+	///基于侧面返回邻居区块。
 	int getTilesAt(const int x, const int y,
 				   dtMeshTile** tiles, const int maxTiles) const;
 

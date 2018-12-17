@@ -1028,6 +1028,8 @@ int dtNavMesh::getTilesAt(const int x, const int y, dtMeshTile** tiles, const in
 ///
 /// This function will not fail if the tiles array is too small to hold the
 /// entire result set.  It will simply fill the array to capacity.
+///如果tiles数组太小而无法容纳，则此函数不会失败
+///整个结果集。 它只是将数组填满容量。
 int dtNavMesh::getTilesAt(const int x, const int y, dtMeshTile const** tiles, const int maxTiles) const
 {
 	int n = 0;

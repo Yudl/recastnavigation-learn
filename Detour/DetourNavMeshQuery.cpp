@@ -617,6 +617,14 @@ void dtNavMeshQuery::closestPointOnPolyInTile(const dtMeshTile* tile, const dtPo
 /// 
 /// @p pos does not have to be within the bounds of the polybon or the navigation mesh.
 /// 
+///比nearestPointOnPoly（）快得多。
+///
+///如果提供的位置位于多边形的xz-bounds（上方或下方）内，
+///然后@p pos和@p nearest将是相等的。
+///
+/// @ppound的高度将是多边形边界。 不使用高度细节。
+///
+/// @p pos不必在polybon或导航网格的范围内。
 dtStatus dtNavMeshQuery::closestPointOnPolyBoundary(dtPolyRef ref, const float* pos, float* closest) const
 {
 	dtAssert(m_nav);
@@ -961,9 +969,6 @@ dtStatus dtNavMeshQuery::queryPolygons(const float* center, const float* extents
 	return DT_SUCCESS;
 }
 
-//如果终点多边形无法到达，容器中最后一个多边形将会是最接近终点的。
-//如果容器不足以容纳整个寻路结果，它将会从起点开始，被尽可能的填充满。
-//起点和终点，用于计算寻路花费。
 /// @par
 ///
 /// If the end polygon cannot be reached through the navigation graph,
@@ -975,6 +980,9 @@ dtStatus dtNavMeshQuery::queryPolygons(const float* center, const float* extents
 /// The start and end positions are used to calculate traversal costs. 
 /// (The y-values impact the result.)
 ///
+//如果终点多边形无法到达，容器中最后一个多边形将会是最接近终点的。
+//如果容器不足以容纳整个寻路结果，它将会从起点开始，被尽可能的填充满。
+//起点和终点，用于计算寻路花费。
 dtStatus dtNavMeshQuery::findPath(dtPolyRef startRef, dtPolyRef endRef,
 								  const float* startPos, const float* endPos,
 								  const dtQueryFilter* filter,
@@ -1666,6 +1674,20 @@ dtStatus dtNavMeshQuery::appendPortals(const int startIdx, const int endIdx, con
 /// they will be filled as far as possible from the start toward the end 
 /// position.
 ///
+//这种方法通常被称为“拉弦”。
+//
+//起始位置夹在路径中的第一个多边形上，并且
+//结束位置被夹到最后。 所以开始和结束位置应该
+//通常分别在第一个和最后一个多边形内或非常接近第一个和最后一个
+//
+//返回的多边形引用表示多边形的引用ID
+//在关联的路径位置输入。 引用ID关联
+//终点始终为零。 这允许例如匹配
+//离网链接指向其代表性多边形。
+//
+//如果提供的结果缓冲区对于整个结果集来说太小，
+//它们将从开始到结束尽可能地填充
+//位置。
 dtStatus dtNavMeshQuery::findStraightPath(const float* startPos, const float* endPos,
 										  const dtPolyRef* path, const int pathSize,
 										  float* straightPath, unsigned char* straightPathFlags, dtPolyRef* straightPathRefs,
