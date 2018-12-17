@@ -224,8 +224,9 @@ struct dtMeshHeader
 	
 	/// The number of unique vertices in the detail mesh. (In addition to the polygon vertices.)
 	int detailVertCount;
-	
+	//细节网格中的三角形数量。
 	int detailTriCount;			///< The number of triangles in the detail mesh.
+	//边界卷节点的数量。
 	int bvNodeCount;			///< The number of bounding volume nodes. (Zero if bounding volumes are disabled.)
 	int offMeshConCount;		///< The number of off-mesh connections.
 	int offMeshBase;			///< The index of the first polygon which is an off-mesh connection.
@@ -313,6 +314,7 @@ public:
 	/// @return The status flags for the operation.
 	dtStatus init(const dtNavMeshParams* params);
 
+	///初始化单个图块使用的导航网格。
 	/// Initializes the navigation mesh for single tile use.
 	///  @param[in]	data		Data of the new tile. (See: #dtCreateNavMeshData)
 	///  @param[in]	dataSize	The data size of the new tile.
