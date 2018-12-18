@@ -23,8 +23,8 @@
 /// memory is expected to be used.
 enum dtAllocHint
 {
-	DT_ALLOC_PERM,		///< Memory persist after a function call.
-	DT_ALLOC_TEMP		///< Memory used temporarily within a function.
+	DT_ALLOC_PERM,		///< Memory persist after a function call.函数调用后内存仍然存在。
+	DT_ALLOC_TEMP		///< Memory used temporarily within a function.暂时在函数中使用的内存。
 };
 
 /// A memory allocation function.

@@ -623,6 +623,8 @@ private:
 /// Allocates a navigation mesh object using the Detour allocator.
 /// @return A navigation mesh that is ready for initialization, or null on failure.
 ///  @ingroup detour
+///使用Detour分配器分配导航网格物体对象。
+/// @return准备初始化的导航网格，或失败时为null。
 dtNavMesh* dtAllocNavMesh();
 
 /// Frees the specified navigation mesh object using the Detour allocator.

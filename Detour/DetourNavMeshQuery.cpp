@@ -978,7 +978,7 @@ dtStatus dtNavMeshQuery::queryPolygons(const float* center, const float* extents
 /// far as possible from the start polygon toward the end polygon.
 ///
 /// The start and end positions are used to calculate traversal costs. 
-/// (The y-values impact the result.)
+/// (The y-values impact the result.)y值会影响结果
 ///
 //如果终点多边形无法到达，容器中最后一个多边形将会是最接近终点的。
 //如果容器不足以容纳整个寻路结果，它将会从起点开始，被尽可能的填充满。
